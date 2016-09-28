@@ -1,0 +1,11 @@
+! Swap caps lock and escape
+remove Lock = Caps_Lock
+keysym Escape = Caps_Lock
+keysym Caps_Lock = Escape
+add Lock = Caps_Lock
+
+!pointer = 1 2 3 4 5 6 7 8 9 10
+pointer = 1 2 3 5 4 7 6 9 8 10
+
+!remove Lock = Caps_Lock
+!keysym Caps_Lock = Escape
