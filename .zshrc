@@ -1,132 +1,169 @@
-# Path to your oh-my-zsh installation.
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
 
-export ZSH="$HOME/.oh-my-zsh" 
+#autoload -U compinit promptinit
+autoload -U compinit
+compinit
+#promptinit
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="robbyrussell"
-#ZSH_THEME="blakely"
-#ZSH_THEME="agnoster"
-#ZSH_THEME="blinks"
+setopt completealiases
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+zstyle ':completion:*' menu select
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+#bindkey -e # Enable this for emacs line editing
+bindkey "\e[1~" beginning-of-line # Home
+bindkey "\e[4~" end-of-line # End
+bindkey "\e[5~" beginning-of-history # PageUp
+bindkey "\e[6~" end-of-history # PageDown
+bindkey "\e[2~" quoted-insert # Ins
+bindkey "\e[3~" delete-char # Del
+bindkey "\e[5C" forward-word
+bindkey "\eOc" emacs-forward-word
+bindkey "\e[5D" backward-word
+bindkey "\eOd" emacs-backward-word
+bindkey "\e\e[C" forward-word
+bindkey "\e\e[D" backward-word
+bindkey "\e[Z" reverse-menu-complete # Shift+Tab
+# for rxvt
+bindkey "\e[7~" beginning-of-line # Home
+bindkey "\e[8~" end-of-line # End
+# for non RH/Debian xterm, can't hurt for RH/Debian xterm
+bindkey "\eOH" beginning-of-line
+bindkey "\eOF" end-of-line
+# for freebsd console
+bindkey "\e[H" beginning-of-line
+bindkey "\e[F" end-of-line
 
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+bindkey "^[[A" history-search-backward
+bindkey "^[[B" history-search-forward
 
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
+# ZYL custom keybindings
+bindkey "^[p" history-search-backward
+bindkey "^[n" history-search-forward
 
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+bindkey "^r" history-incremental-pattern-search-backward
+bindkey "^?" backward-delete-char
 
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+bindkey "^a" beginning-of-line
+bindkey "^e" end-of-line
 
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+autoload -U colors && colors
 
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+# This will set the default prompt to the walters theme
+#prompt adam2
 
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+#PROMPT=$'%B%F{cyan}%n %b%f%F{cyan}<>%f> '
+PROMPT=$'%F{blue}%n %f%F{blue}<%~>%f%B>%b '
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git mercurial)
+#RPROMPT='%F{green}%~ on %M at (%T %W)%f'
+#Date Prompt
 
-# User configuration
+#RPROMPT='%F{green}%~ [%M (%T)]%f'
+#RPROMPT='%F{green}%~ [%M %T]%f'
+#RPROMPT='%F{green} [%M %T]%f'
 
-source "$ZSH/oh-my-zsh.sh"
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# don't put duplicate lines in the history. See bash(1) for more options
+# ... or force ignoredups and ignorespace
+HISTCONTROL=ignoredups:ignorespace
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# set a fancy prompt (non-color, unless we know we "want" color)
+#case "$TERM" in
+    #xterm-color) color_prompt=yes;;
+#esac
+color_prompt=yes
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+#force_color_prompt=yes
 
-HISTFILE=~/.histfile
-HISTSIZE=10000
-SAVEHIST=1000
-setopt appendhistory autocd extendedglob nomatch notify
-unsetopt beep
-bindkey -v
-# End of lines configured by zsh-newuser-install
+#if [ -n "$force_color_prompt" ]; then
+    #if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	## We have color support; assume it's compliant with Ecma-48
+	## (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+	## a case would tend to support setf rather than setaf.)
+	#color_prompt=yes
+    #else
+	#color_prompt=
+    #fi
+#fi
 
-. ~/.profile
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
 
-#alias grep='grep --color=always'
-function fnd () {
-  find . -iname "*${1}*"
-}
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-function mkcd () {
-  mkdir -p "$1" && cd "$1"
-}
-alias qs='hg qseries -s -v'
-bindkey -v
-#bindkey "^R" history-incremental-search-backward
-bindkey "^R" history-incremental-pattern-search-backward
-bindkey "^W" backward-kill-word    # vi-backward-kill-word
-bindkey "^H" backward-delete-char  # vi-backward-delete-char
-bindkey "^U" backward-kill-line    # vi-kill-line
-bindkey "^?" backward-delete-char  # vi-backward-delete-char
-bindkey "^A" beginning-of-line
-#bindkey "^K" forward-kill-word  # vi-backward-delete-char
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-#RPROMPT='[%D{%L:%M:%S %p}]'
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
 
-#TMOUT=1
+## set PATH so it includes user's private bin if it exists
+#if [ -d "$HOME/.local/bin" ] ; then
+    #PATH="$HOME/.local/bin:$PATH"
+#fi
 
-#TRAPALRM() {
-    #zle reset-prompt
-#}
+## set PATH so it includes the script folder
+#if [ -d "$HOME/.oosoom/scripts" ] ; then
+    #PATH="$HOME/.oosoom/scripts:$PATH"
+#fi
 
-#export TERM=screen-256color
-#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-#. /etc/profile.d/fzf.zsh
-. /usr/share/fzf/key-bindings.zsh
+# Fix ^s
+stty stop ''
 
-TMOUT=1
+# Use keychain to save ssh keys.
+#alias ssh='eval $(/usr/bin/keychain --eval --agents ssh -Q --quiet ~/.ssh/id_rsa) && ssh'
+#alias rsync='eval $(/usr/bin/keychain --eval --agents ssh -Q --quiet ~/.ssh/id_rsa) && rsync'
+alias fm='dbus-launch pcmanfm'
+#alias ssh='envoy-exec ssh'
+#alias git='envoy-exec git'
+#alias rsync='envoy-exec rsync'
 
-TRAPALRM() {
-    cd "$(pwd)"
-    #zle reset-prompt
-}
+#export GEM_HOME=~/.gem/ruby/1.9.3
 
-source /usr/bin/virtualenvwrapper_lazy.sh
+#gibo=/usr/share/zsh/site-functions/_gibo
+gibo=/etc/gibo/gibo-completion.zsh
+if [ -e $gibo ]; then
+        . $gibo
+fi
+
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+export WORKON_HOME=$HOME/.virtualenvs
+
+source /usr/bin/virtualenvwrapper.sh
+
+#source /usr/share/cdargs/cdargs-bash.sh
+source ~/.cdargs-zsh.sh
+
+source ~/.rvm/scripts/rvm
+
+envoy -t ssh-agent
+source <(envoy -p)
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
