@@ -32,17 +32,30 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
+# start a browser window
+bindsym $mod+n exec firefox-developer
+
 # kill focused window
 bindsym $mod+Shift+c kill
 
 # start dmenu (a program launcher)
-#bindsym $mod+d exec dmenu_run
+bindsym $mod+d exec dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 #bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
-bindsym $mod+Tab focus right
+force_focus_wrapping no
+
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
@@ -55,29 +68,51 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+v split h
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+s split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+#bindsym $mod+s layout stacking
+#bindsym $mod+w layout tabbed
+#bindsym $mod+e layout toggle split
 
 set $ws1 "1:term"
 set $ws2 "2:web"
-set $ws3 "3:files"
-set $ws4 "4:docs"
-set $ws5 "5:images"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
 set $ws6 "6:chat"
 set $ws7 "7:art"
 set $ws8 "8:music"
 set $ws9 "9:sys"
-set $ws10 "rest"
+set $ws0 "u.u"
+
+set $ws1c "c1"
+set $ws2c "c2"
+set $ws3c "c3"
+set $ws4c "c4"
+set $ws5c "c5"
+set $ws6c "c6"
+set $ws7c "c7"
+set $ws8c "c8"
+set $ws9c "c9"
+set $ws0c "._."
+
+set $ws1a "a1"
+set $ws2a "a2"
+set $ws3a "a3"
+set $ws4a "a4"
+set $ws5a "a5"
+set $ws6a "a6"
+set $ws7a "a7"
+set $ws8a "a8"
+set $ws9a "a9"
+set $ws0a "d._.b"
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -89,19 +124,64 @@ bindsym $mod+6 workspace $ws6
 bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
-bindsym $mod+0 workspace $ws10
+bindsym $mod+0 workspace $ws0
+
+bindsym $mod+Control+1 workspace $ws1c
+bindsym $mod+Control+2 workspace $ws2c
+bindsym $mod+Control+3 workspace $ws3c
+bindsym $mod+Control+4 workspace $ws4c
+bindsym $mod+Control+5 workspace $ws5c
+bindsym $mod+Control+6 workspace $ws6c
+bindsym $mod+Control+7 workspace $ws7c
+bindsym $mod+Control+8 workspace $ws8c
+bindsym $mod+Control+9 workspace $ws9c
+bindsym $mod+Control+0 workspace $ws0c
+
+bindsym $mod+Mod1+1 workspace $ws1a
+bindsym $mod+Mod1+2 workspace $ws2a
+bindsym $mod+Mod1+3 workspace $ws3a
+bindsym $mod+Mod1+4 workspace $ws4a
+bindsym $mod+Mod1+5 workspace $ws5a
+bindsym $mod+Mod1+6 workspace $ws6a
+bindsym $mod+Mod1+7 workspace $ws7a
+bindsym $mod+Mod1+8 workspace $ws8a
+bindsym $mod+Mod1+9 workspace $ws9a
+bindsym $mod+Mod1+0 workspace $ws0a
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace $ws1
-bindsym $mod+Shift+2 move container to workspace $ws2
-bindsym $mod+Shift+3 move container to workspace $ws3
-bindsym $mod+Shift+4 move container to workspace $ws4
-bindsym $mod+Shift+5 move container to workspace $ws5
-bindsym $mod+Shift+6 move container to workspace $ws6
-bindsym $mod+Shift+7 move container to workspace $ws7
-bindsym $mod+Shift+8 move container to workspace $ws8
-bindsym $mod+Shift+9 move container to workspace $ws9
-bindsym $mod+Shift+0 move container to workspace $ws10
+bindsym $mod+Shift+1 move container to workspace $ws1; workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2; workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3; workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4; workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5; workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws0; workspace $ws0
+
+bindsym $mod+Shift+Control+1 move container to workspace $ws1c; workspace $ws1c
+bindsym $mod+Shift+Control+2 move container to workspace $ws2c; workspace $ws2c
+bindsym $mod+Shift+Control+3 move container to workspace $ws3c; workspace $ws3c
+bindsym $mod+Shift+Control+4 move container to workspace $ws4c; workspace $ws4c
+bindsym $mod+Shift+Control+5 move container to workspace $ws5c; workspace $ws5c
+bindsym $mod+Shift+Control+6 move container to workspace $ws6c; workspace $ws6c
+bindsym $mod+Shift+Control+7 move container to workspace $ws7c; workspace $ws7c
+bindsym $mod+Shift+Control+8 move container to workspace $ws8c; workspace $ws8c
+bindsym $mod+Shift+Control+9 move container to workspace $ws9c; workspace $ws9c
+bindsym $mod+Shift+Control+0 move container to workspace $ws0c; workspace $ws0c
+
+bindsym $mod+Shift+Mod1+1 move container to workspace $ws1a; workspace $ws1a
+bindsym $mod+Shift+Mod1+2 move container to workspace $ws2a; workspace $ws2a
+bindsym $mod+Shift+Mod1+3 move container to workspace $ws3a; workspace $ws3a
+bindsym $mod+Shift+Mod1+4 move container to workspace $ws4a; workspace $ws4a
+bindsym $mod+Shift+Mod1+5 move container to workspace $ws5a; workspace $ws5a
+bindsym $mod+Shift+Mod1+6 move container to workspace $ws6a; workspace $ws6a
+bindsym $mod+Shift+Mod1+7 move container to workspace $ws7a; workspace $ws7a
+bindsym $mod+Shift+Mod1+8 move container to workspace $ws8a; workspace $ws8a
+bindsym $mod+Shift+Mod1+9 move container to workspace $ws9a; workspace $ws9a
+bindsym $mod+Shift+Mod1+0 move container to workspace $ws0a; workspace $ws0a
+
 
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
@@ -118,23 +198,27 @@ bar {
   position top
 }
 
-new_window none
+new_window pixel 2
 
 bindsym $mod+Escape workspace back_and_forth
-bindsym $mod+l exec i3lock
+bindsym $mod+Shift+Escape move container to workspace back_and_forth; workspace back_and_forth
+bindsym $mod+Shift+s exec "lock-clean.sh && sync && systemctl suspend"
+bindsym $mod+Shift+d exec "lock.sh"
 
 exec xcompmgr
 exec xmodmap ~/.Xmodmap
 exec kupfer
 exec volumeicon
+exec xautolock -time 5 -locker '~/.local/bin/lock.sh'
+exec dropbox
 
-assign [class="^URxvt$"] $ws1
-assign [class="^XTerm$"] $ws1
-assign [class="^Sakura$"] $ws1
-assign [class="^Gnome-terminal$"] $ws1
-assign [class="^konsole$"] $ws1
+#assign [class="^URxvt$"] $ws1
+#assign [class="^XTerm$"] $ws1
+#assign [class="^Sakura$"] $ws1
+#assign [class="^Gnome-terminal$"] $ws1
+#assign [class="^konsole$"] $ws1
 
-assign [class="^Firefox$"] $ws2
+#assign [class="^Firefox$"] $ws2
 assign [class="^Chromium$"] $ws2
 assign [class="^servo$"] $ws2
 
@@ -192,3 +276,4 @@ assign [class="^Gnumeric$"] $office_ws
 
 set $nitrogen_ws "nitrogen"
 assign [class="^Nitrogen$"] $nitrogen_ws
+for_window [class="^Nitrogen$"] floating enable
